@@ -40,7 +40,7 @@ Debiana.
 
 %build
 %{__gettextize}
-aclocal
+%{__aclocal}
 %{__autoconf}
 %configure \
 	--enable-shared \
