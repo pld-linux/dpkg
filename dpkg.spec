@@ -11,10 +11,10 @@ Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{ver
 Patch0:		%{name}-no-debiandoc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-acfix.patch
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This package contains the programs which handle the installation and
