@@ -1,7 +1,8 @@
 Summary:	Package maintenance system for Debian Linux
+Summary(pl):	Program do obs³ugi pakietów Debiana
 Name:		dpkg
-Version:	1.6.14
-Release:	2
+Version:	1.6.15
+Release:	1
 License:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
@@ -23,6 +24,9 @@ form of the `dpkg' command.
 In order to unpack and build Debian source packages you will need to
 install the developers' package `dpkg-dev' as well as this one.
 
+%description -l pl
+Ten pakiet zawiera narzêdzia do obs³ugi pakietów deb znanych z Debiana.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -30,6 +34,7 @@ install the developers' package `dpkg-dev' as well as this one.
 
 %build
 gettextize --copy --force
+aclocal -I automake
 autoconf
 %configure \
 	--enable-shared \
