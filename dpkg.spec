@@ -2,15 +2,17 @@ Summary:	Package maintenance system for Debian Linux
 Summary(pl):	Program do obs³ugi pakietów Debiana
 Name:		dpkg
 Version:	1.6.15
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/File
 Group(de):	Applikationen/Datei
 Group(pl):	Aplikacje/Pliki
 Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
+Source1:	%{name}-pl-man-pages.tar.bz2
 Patch0:		%{name}-no-debiandoc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-acfix.patch
+Patch3:		%{name}-no_man_section.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -36,6 +38,7 @@ Debiana.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0
 
 %build
 gettextize --copy --force
@@ -56,6 +59,8 @@ install -d $RPM_BUILD_ROOT%{_defaultdocdir}/dpkg
 	DESTDIR=$RPM_BUILD_ROOT
 
 gzip -9nf $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}/*
+
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 %find_lang dpkg
 
@@ -98,4 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man8/dpkg*
 %lang(ja) %{_mandir}/ja/man8/start-stop*
 %lang(ja) %{_mandir}/ja/man8/update*
+%lang(pl) %{_mandir}/pl/man1/dpkg*
+%lang(pl) %{_mandir}/pl/man8/dpkg*
 %lang(sv) %{_mandir}/sv/man5/*
