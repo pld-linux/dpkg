@@ -41,7 +41,7 @@ Debiana.
 %build
 gettextize --copy --force
 aclocal
-autoconf
+%{__autoconf}
 %configure \
 	--enable-shared \
 	--without-dselect \
