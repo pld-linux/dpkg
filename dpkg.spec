@@ -13,9 +13,12 @@ Patch0:		%{name}-no-debiandoc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-acfix.patch
 Patch3:		%{name}-no_man_section.patch
+Patch4:		%{name}-gcc33.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRequires:	libtool
+BuildRequires:	perl-tools-pod
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -39,8 +42,10 @@ Debiana.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p0
+%patch4 -p1
 
 %build
+%{__libtoolize}
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}
@@ -49,7 +54,8 @@ Debiana.
 	--without-dselect \
 	--with-admindir=/var/lib/%{name}
 
-%{__make} docdir=%{_defaultdocdir}/%{name}-%{version}
+%{__make} docdir=%{_defaultdocdir}/%{name}-%{version} \
+	CFLAGS="%{rpmcflags} -DSYS_SIGLIST_DECLARED"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -57,8 +63,6 @@ install -d $RPM_BUILD_ROOT%{_defaultdocdir}/dpkg
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-gzip -9nf $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}/*
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
