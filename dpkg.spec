@@ -1,13 +1,16 @@
 Summary:	Package maintenance system for Debian Linux
 Name:		dpkg
 Version:	1.6.14
-Release:	1
+Release:	2
 License:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
 Source:		ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
-Patch0:		dpkg-no-debiandoc.patch
+Patch0:		%{name}-no-debiandoc.patch
+Patch1:		%{name}-opt.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRequires:	gettext-devel
+BuildRequires:	autoconf
 
 %description
 This package contains the programs which handle the installation and
@@ -23,9 +26,11 @@ install the developers' package `dpkg-dev' as well as this one.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 gettextize --copy --force
+autoconf
 %configure \
 	--enable-shared \
 	--without-dselect \
@@ -40,11 +45,7 @@ install -d $RPM_BUILD_ROOT%{_defaultdocdir}/dpkg
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-strip --strip-unneeded $RPM_BUILD_ROOT{%{_bindir},%{_sbindir}}/* || :
-
-gzip -9nf $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}/* \
-	$RPM_BUILD_ROOT%{_mandir}/man*/* \
-	$RPM_BUILD_ROOT%{_mandir}/*/man*/*
+gzip -9nf $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}/*
 
 %find_lang dpkg
 
