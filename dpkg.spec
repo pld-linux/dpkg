@@ -2,7 +2,7 @@ Summary:	Package maintenance system for Debian Linux
 Summary(pl):	Program do obs³ugi pakietów Debiana
 Name:		dpkg
 Version:	1.6.15
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
@@ -14,6 +14,7 @@ Patch1:		%{name}-opt.patch
 Patch2:		%{name}-acfix.patch
 Patch3:		%{name}-no_man_section.patch
 Patch4:		%{name}-gcc33.patch
+Patch5:		%{name}-po.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -43,6 +44,7 @@ Debiana.
 %patch2 -p1
 %patch3 -p0
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__libtoolize}
