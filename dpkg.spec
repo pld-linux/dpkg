@@ -11,7 +11,6 @@ Patch0:		%{name}-no-debiandoc.patch
 Patch1:		%{name}-opt.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	gettext-devel
-BuildRequires:	autoconf
 
 %description
 This package contains the programs which handle the installation and
@@ -34,9 +33,7 @@ Ten pakiet zawiera narzêdzia do obs³ugi pakietów deb znanych z Debiana.
 
 %build
 gettextize --copy --force
-aclocal -I automake
-autoconf
-%configure \
+%configure2_13 \
 	--enable-shared \
 	--without-dselect \
 	--with-admindir=/var/lib/%{name}
