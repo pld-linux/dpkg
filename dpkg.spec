@@ -2,14 +2,18 @@ Summary:	Package maintenance system for Debian Linux
 Summary(pl):	Program do obs³ugi pakietów Debiana
 Name:		dpkg
 Version:	1.6.15
-Release:	1
+Release:	2
 License:	GPL
-Group:		Utilities/File
-Group(pl):	Narzêdzia/Pliki
-Source:		ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
+Group:		Applications/File
+Group(de):	Applikationen/Datei
+Group(pl):	Aplikacje/Pliki
+Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
 Patch0:		%{name}-no-debiandoc.patch
 Patch1:		%{name}-opt.patch
+Patch2:		%{name}-acfix.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gettext-devel
 
 %description
@@ -24,16 +28,20 @@ In order to unpack and build Debian source packages you will need to
 install the developers' package `dpkg-dev' as well as this one.
 
 %description -l pl
-Ten pakiet zawiera narzêdzia do obs³ugi pakietów deb znanych z Debiana.
+Ten pakiet zawiera narzêdzia do obs³ugi pakietów deb znanych z
+Debiana.
 
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 gettextize --copy --force
-%configure2_13 \
+aclocal
+autoconf
+%configure \
 	--enable-shared \
 	--without-dselect \
 	--with-admindir=/var/lib/%{name}
