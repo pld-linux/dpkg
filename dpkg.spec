@@ -2,18 +2,23 @@ Summary:	Package maintenance system for Debian Linux
 Summary(pl):	Program do obs³ugi pakietów Debiana
 Name:		dpkg
 Version:	1.6.15
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/File
-Group(de):	Applikationen/Datei
-Group(pl):	Aplikacje/Pliki
 Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
+# Source0-md5:	a7630586c2c50b27ad8d2800c6ce7d37
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-pl-man-pages.tar.bz2
+# Source1-md5:	55b735ac489c7db709c9e7b3ca535f97
 Patch0:		%{name}-no-debiandoc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-acfix.patch
+Patch3:		%{name}-no_man_section.patch
+Patch4:		%{name}-po.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRequires:	libtool
+BuildRequires:	perl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -36,17 +41,21 @@ Debiana.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0
+%patch4 -p1
 
 %build
-gettextize --copy --force
-aclocal
-autoconf
+%{__libtoolize}
+%{__gettextize}
+%{__aclocal}
+%{__autoconf}
 %configure \
 	--enable-shared \
 	--without-dselect \
 	--with-admindir=/var/lib/%{name}
 
-%{__make} docdir=%{_defaultdocdir}/%{name}-%{version}
+%{__make} docdir=%{_defaultdocdir}/%{name}-%{version} \
+	CFLAGS="%{rpmcflags} -DSYS_SIGLIST_DECLARED"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -55,7 +64,7 @@ install -d $RPM_BUILD_ROOT%{_defaultdocdir}/dpkg
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}/*
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 %find_lang dpkg
 
@@ -98,4 +107,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man8/dpkg*
 %lang(ja) %{_mandir}/ja/man8/start-stop*
 %lang(ja) %{_mandir}/ja/man8/update*
+%lang(pl) %{_mandir}/pl/man1/dpkg*
+%lang(pl) %{_mandir}/pl/man8/dpkg*
 %lang(sv) %{_mandir}/sv/man5/*
