@@ -6,7 +6,9 @@ Release:	3
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
+# Source0-md5:	a7630586c2c50b27ad8d2800c6ce7d37
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-pl-man-pages.tar.bz2
+# Source1-md5:	55b735ac489c7db709c9e7b3ca535f97
 Patch0:		%{name}-no-debiandoc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-acfix.patch
