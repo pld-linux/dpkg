@@ -39,7 +39,7 @@ Debiana.
 %patch3 -p0
 
 %build
-gettextize --copy --force
+%{__gettextize}
 aclocal
 %{__autoconf}
 %configure \
