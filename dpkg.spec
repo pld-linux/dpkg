@@ -1,20 +1,20 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl):	Program do obs³ugi pakietów Debiana
 Name:		dpkg
-Version:	1.6.15
-Release:	4
+Version:	1.10.23
+Release:	1
 License:	GPL
 Group:		Applications/File
-Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
-# Source0-md5:	a7630586c2c50b27ad8d2800c6ce7d37
+Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
+# Source0-md5:	94a845ab0e14deb196d43e03c48a16b9
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-pl-man-pages.tar.bz2
 # Source1-md5:	55b735ac489c7db709c9e7b3ca535f97
-Patch0:		%{name}-no-debiandoc.patch
-Patch1:		%{name}-opt.patch
-Patch2:		%{name}-acfix.patch
-Patch3:		%{name}-no_man_section.patch
-Patch4:		%{name}-gcc33.patch
-Patch5:		%{name}-po.patch
+#Patch0:		%{name}-no-debiandoc.patch
+#Patch1:		%{name}-opt.patch
+#Patch2:		%{name}-acfix.patch
+#Patch3:		%{name}-no_man_section.patch
+#Patch4:		%{name}-gcc33.patch
+#Patch5:		%{name}-po.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -39,21 +39,22 @@ Debiana.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p0
-%patch4 -p1
-%patch5 -p1
+#%patch0 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p0
+#%patch4 -p1
+#%patch5 -p1
 
 %build
-%{__libtoolize}
-%{__gettextize}
-%{__aclocal}
-%{__autoconf}
+#%%{__libtoolize}
+#%%{__gettextize}
+#%%{__aclocal}
+#%%{__autoconf}
 %configure \
 	--enable-shared \
 	--without-dselect \
+	--without-sgml-doc \
 	--with-admindir=/var/lib/%{name}
 
 %{__make} docdir=%{_defaultdocdir}/%{name}-%{version} \
@@ -95,7 +96,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/start-stop-daemon
 %attr(755,root,root) %{_sbindir}/dpkg-divert
 %attr(755,root,root) %{_sbindir}/update-alternatives
-%attr(755,root,root) %{_sbindir}/update-rc.d
 %dir /var/lib/dpkg
 /var/lib/dpkg/*
 %{_mandir}/man1/822-date.1*
@@ -104,6 +104,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/dpkg*
 %{_mandir}/man8/start-stop*
 %{_mandir}/man8/update*
+%lang(es) %{_mandir}/es/man1/dpkg*
+%lang(es) %{_mandir}/es/man5/*
+%lang(es) %{_mandir}/es/man8/dpkg*
+%lang(fr) %{_mandir}/fr/man1/dpkg*
+%lang(fr) %{_mandir}/fr/man5/*
+%lang(fr) %{_mandir}/fr/man8/dpkg*
 %lang(ja) %{_mandir}/ja/man1/dpkg*
 %lang(ja) %{_mandir}/ja/man5/*
 %lang(ja) %{_mandir}/ja/man8/dpkg*
@@ -111,4 +117,10 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man8/update*
 %lang(pl) %{_mandir}/pl/man1/dpkg*
 %lang(pl) %{_mandir}/pl/man8/dpkg*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/dpkg*
+%lang(ru) %{_mandir}/ru/man1/dpkg*
+%lang(ru) %{_mandir}/ru/man5/*
+%lang(ru) %{_mandir}/ru/man8/dpkg*
+%lang(sv) %{_mandir}/sv/man1/dpkg*
 %lang(sv) %{_mandir}/sv/man5/*
+%lang(sv) %{_mandir}/sv/man8/dpkg*
