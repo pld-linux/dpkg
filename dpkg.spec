@@ -5,8 +5,6 @@ Version:	1.6.15
 Release:	3
 License:	GPL
 Group:		Applications/File
-Group(de):	Applikationen/Datei
-Group(pl):	Aplikacje/Pliki
 Source0:	ftp://ftp.debian.org/debian/dists/potato/main/source/base/%{name}_%{version}.tar.gz
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-pl-man-pages.tar.bz2
 Patch0:		%{name}-no-debiandoc.patch
