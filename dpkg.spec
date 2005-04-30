@@ -93,7 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %dir %{_libdir}/dpkg/methods/*/setup
 %attr(755,root,root) %dir %{_libdir}/dpkg/methods/*/update
 %attr(755,root,root) %dir %{_libdir}/dpkg/parsechangelog/debian
-%attr(755,root,root) %{_sbindir}/start-stop-daemon
+#%attr(755,root,root) %{_sbindir}/start-stop-daemon
 %attr(755,root,root) %{_sbindir}/dpkg-divert
 %attr(755,root,root) %{_sbindir}/update-alternatives
 %dir /var/lib/dpkg
@@ -102,7 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/dpkg*
 %{_mandir}/man5/*
 %{_mandir}/man8/dpkg*
-%{_mandir}/man8/start-stop*
+#%{_mandir}/man8/start-stop*
 %{_mandir}/man8/update*
 %lang(es) %{_mandir}/es/man1/dpkg*
 %lang(es) %{_mandir}/es/man5/*
@@ -113,7 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/dpkg*
 %lang(ja) %{_mandir}/ja/man5/*
 %lang(ja) %{_mandir}/ja/man8/dpkg*
-%lang(ja) %{_mandir}/ja/man8/start-stop*
+#%lang(ja) %{_mandir}/ja/man8/start-stop*
 %lang(ja) %{_mandir}/ja/man8/update*
 %lang(pl) %{_mandir}/pl/man1/dpkg*
 %lang(pl) %{_mandir}/pl/man8/dpkg*
