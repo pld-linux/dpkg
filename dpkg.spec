@@ -2,7 +2,7 @@ Summary:	Package maintenance system for Debian Linux
 Summary(pl):	Program do obs³ugi pakietów Debiana
 Name:		dpkg
 Version:	1.10.23
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
@@ -47,6 +47,7 @@ Debiana.
 #%patch5 -p1
 
 %build
+cp -f /usr/share/automake/config.sub .
 #%%{__libtoolize}
 #%%{__gettextize}
 #%%{__aclocal}
