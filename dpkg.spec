@@ -59,12 +59,12 @@ cp -f /usr/share/automake/config.sub .
 	--without-sgml-doc \
 	--with-admindir=/var/lib/%{name}
 
-%{__make} docdir=%{_defaultdocdir}/%{name}-%{version} \
+%{__make} docdir=%{_docdir}/%{name}-%{version} \
 	CFLAGS="%{rpmcflags} -DSYS_SIGLIST_DECLARED"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_defaultdocdir}/dpkg
+install -d $RPM_BUILD_ROOT%{_docdir}/dpkg
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -79,7 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f dpkg.lang
 %defattr(644,root,root,755)
 %doc doc/database-structure.fig doc/internals.sgml
-%doc $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}/*
+%doc $RPM_BUILD_ROOT%{_docdir}/%{name}/*
 %attr(755,root,root) %{_bindir}/822-date
 %attr(755,root,root) %{_bindir}/dpkg*
 %dir %{_libdir}/dpkg
