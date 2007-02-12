@@ -1,5 +1,5 @@
 Summary:	Package maintenance system for Debian Linux
-Summary(pl.UTF-8):   Program do obsługi pakietów Debiana
+Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
 Version:	1.10.23
 Release:	2
