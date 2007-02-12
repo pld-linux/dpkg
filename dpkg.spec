@@ -1,5 +1,5 @@
 Summary:	Package maintenance system for Debian Linux
-Summary(pl):	Program do obs³ugi pakietów Debiana
+Summary(pl.UTF-8):   Program do obsÅ‚ugi pakietÃ³w Debiana
 Name:		dpkg
 Version:	1.10.23
 Release:	2
@@ -34,8 +34,8 @@ form of the `dpkg' command.
 In order to unpack and build Debian source packages you will need to
 install the developers' package `dpkg-dev' as well as this one.
 
-%description -l pl
-Ten pakiet zawiera narzêdzia do obs³ugi pakietów deb znanych z
+%description -l pl.UTF-8
+Ten pakiet zawiera narzÄ™dzia do obsÅ‚ugi pakietÃ³w deb znanych z
 Debiana.
 
 %prep
