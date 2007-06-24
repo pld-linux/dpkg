@@ -1,23 +1,17 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.10.23
-Release:	2
+Version:	1.14.4
+Release:	0.1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
-# Source0-md5:	94a845ab0e14deb196d43e03c48a16b9
-Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-pl-man-pages.tar.bz2
-# Source1-md5:	55b735ac489c7db709c9e7b3ca535f97
-#Patch0:		%{name}-no-debiandoc.patch
-#Patch1:		%{name}-opt.patch
-#Patch2:		%{name}-acfix.patch
-#Patch3:		%{name}-no_man_section.patch
-#Patch4:		%{name}-gcc33.patch
-#Patch5:		%{name}-po.patch
+# Source0-md5:	c9d6a52582bc39fa725b498e095d3ee1
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel
+BuildRequires:	libselinux-devel
 BuildRequires:	libtool
 BuildRequires:	perl-tools-pod
 BuildRequires:	zlib-devel
@@ -40,36 +34,25 @@ Debiana.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
-#%patch3 -p0
-#%patch4 -p1
-#%patch5 -p1
 
 %build
-cp -f /usr/share/automake/config.sub .
-#%%{__libtoolize}
-#%%{__gettextize}
-#%%{__aclocal}
-#%%{__autoconf}
 %configure \
 	--enable-shared \
 	--without-dselect \
-	--without-sgml-doc \
-	--with-admindir=/var/lib/%{name}
+	--without-start-stop-daemon \
+	--with-zlib \
+	--with-bz2 \
+	--with-selinux \
+	--with-admindir=/var/lib/%{name} \
+	SELINUX_LIBS=-lselinux
 
-%{__make} docdir=%{_docdir}/%{name}-%{version} \
-	CFLAGS="%{rpmcflags} -DSYS_SIGLIST_DECLARED"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_docdir}/dpkg
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 %find_lang dpkg
 
@@ -78,51 +61,39 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f dpkg.lang
 %defattr(644,root,root,755)
-%doc doc/database-structure.fig doc/internals.sgml
-%doc $RPM_BUILD_ROOT%{_docdir}/%{name}/*
+#%doc $RPM_BUILD_ROOT%{_docdir}/%{name}/*
 %attr(755,root,root) %{_bindir}/822-date
 %attr(755,root,root) %{_bindir}/dpkg*
 %dir %{_libdir}/dpkg
-%dir %{_libdir}/dpkg/methods
 %dir %{_libdir}/dpkg/parsechangelog
-%dir %{_libdir}/dpkg/methods/disk
-%dir %{_libdir}/dpkg/methods/floppy
 %{_libdir}/dpkg/controllib.pl
 %attr(755,root,root) %{_libdir}/dpkg/mksplit
-%dir %{_libdir}/dpkg/methods/*/desc*
-%dir %{_libdir}/dpkg/methods/*/names
-%attr(755,root,root) %dir %{_libdir}/dpkg/methods/*/install
-%attr(755,root,root) %dir %{_libdir}/dpkg/methods/*/setup
-%attr(755,root,root) %dir %{_libdir}/dpkg/methods/*/update
 %attr(755,root,root) %dir %{_libdir}/dpkg/parsechangelog/debian
-#%attr(755,root,root) %{_sbindir}/start-stop-daemon
 %attr(755,root,root) %{_sbindir}/dpkg-divert
 %attr(755,root,root) %{_sbindir}/update-alternatives
 %dir /var/lib/dpkg
 /var/lib/dpkg/*
-%{_mandir}/man1/822-date.1*
-%{_mandir}/man1/dpkg*
-%{_mandir}/man5/*
-%{_mandir}/man8/dpkg*
-#%{_mandir}/man8/start-stop*
+%{_mandir}/man1/822*
+%{_mandir}/man5/deb*
+%{_mandir}/man*/dpkg*
 %{_mandir}/man8/update*
-%lang(es) %{_mandir}/es/man1/dpkg*
-%lang(es) %{_mandir}/es/man5/*
-%lang(es) %{_mandir}/es/man8/dpkg*
-%lang(fr) %{_mandir}/fr/man1/dpkg*
-%lang(fr) %{_mandir}/fr/man5/*
-%lang(fr) %{_mandir}/fr/man8/dpkg*
-%lang(ja) %{_mandir}/ja/man1/dpkg*
-%lang(ja) %{_mandir}/ja/man5/*
-%lang(ja) %{_mandir}/ja/man8/dpkg*
-#%lang(ja) %{_mandir}/ja/man8/start-stop*
+%lang(de) %{_mandir}/de/man1/822*
+%lang(de) %{_mandir}/de/man5/deb*
+%lang(de) %{_mandir}/de/man*/dpkg*
+%lang(de) %{_mandir}/de/man8/update*
+%lang(fr) %{_mandir}/fr/man1/822*
+%lang(fr) %{_mandir}/fr/man5/deb*
+%lang(fr) %{_mandir}/fr/man*/dpkg*
+%lang(fr) %{_mandir}/fr/man8/update*
+%lang(hu) %{_mandir}/hu/man5/deb*
+%lang(hu) %{_mandir}/hu/man*/dpkg*
+%lang(ja) %{_mandir}/ja/man5/deb*
+%lang(ja) %{_mandir}/ja/man*/dpkg*
 %lang(ja) %{_mandir}/ja/man8/update*
-%lang(pl) %{_mandir}/pl/man1/dpkg*
-%lang(pl) %{_mandir}/pl/man8/dpkg*
-%lang(pt_BR) %{_mandir}/pt_BR/man8/dpkg*
-%lang(ru) %{_mandir}/ru/man1/dpkg*
-%lang(ru) %{_mandir}/ru/man5/*
-%lang(ru) %{_mandir}/ru/man8/dpkg*
-%lang(sv) %{_mandir}/sv/man1/dpkg*
-%lang(sv) %{_mandir}/sv/man5/*
-%lang(sv) %{_mandir}/sv/man8/dpkg*
+%lang(pl) %{_mandir}/pl/man1/822*
+%lang(pl) %{_mandir}/pl/man*/dpkg*
+%lang(pl) %{_mandir}/pl/man8/update*
+%lang(ru) %{_mandir}/ru/man5/deb*
+%lang(ru) %{_mandir}/ru/man*/dpkg*
+%lang(sv) %{_mandir}/sv/man5/deb*
+%lang(sv) %{_mandir}/sv/man*/dpkg*
