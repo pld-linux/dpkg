@@ -15,6 +15,7 @@ BuildRequires:	libselinux-devel
 BuildRequires:	libtool
 BuildRequires:	perl-tools-pod
 BuildRequires:	zlib-devel
+Requires: perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -66,7 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/dpkg*
 %dir %{_libdir}/dpkg
 %dir %{_libdir}/dpkg/parsechangelog
-%{_libdir}/dpkg/controllib.pl
+%{_libdir}/dpkg/*.pl
 %attr(755,root,root) %{_libdir}/dpkg/mksplit
 %attr(755,root,root) %dir %{_libdir}/dpkg/parsechangelog/debian
 %attr(755,root,root) %{_sbindir}/dpkg-divert
