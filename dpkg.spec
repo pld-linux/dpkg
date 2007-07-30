@@ -15,7 +15,7 @@ BuildRequires:	libselinux-devel
 BuildRequires:	libtool
 BuildRequires:	perl-tools-pod
 BuildRequires:	zlib-devel
-Requires: perl
+Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
