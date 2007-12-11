@@ -1,42 +1,8 @@
-# TODO
-# - unpackaged:
-#   /etc/alternatives/README
-#   /etc/dpkg/origins/debian
-#   /usr/lib/dpkg/enoent
-#   /usr/sbin/cleanup-info
-#   /usr/sbin/dpkg-statoverride
-#   /usr/sbin/install-info
-#   /usr/share/dpkg/cputable
-#   /usr/share/dpkg/ostable
-#   /usr/share/dpkg/triplettable
-#   /usr/share/locale/ca/LC_MESSAGES/dpkg-dev.mo
-#   /usr/share/locale/fr/LC_MESSAGES/dpkg-dev.mo
-#   /usr/share/man/de/man5/dselect.cfg.5.gz
-#   /usr/share/man/de/man8/cleanup-info.8.gz
-#   /usr/share/man/de/man8/start-stop-daemon.8.gz
-#   /usr/share/man/fr/man1/dselect.1.gz
-#   /usr/share/man/fr/man5/dselect.cfg.5.gz
-#   /usr/share/man/fr/man8/cleanup-info.8.gz
-#   /usr/share/man/fr/man8/start-stop-daemon.8.gz
-#   /usr/share/man/hu/man5/dselect.cfg.5.gz
-#   /usr/share/man/ja/man1/dselect.1.gz
-#   /usr/share/man/ja/man8/cleanup-info.8.gz
-#   /usr/share/man/man1/dselect.1.gz
-#   /usr/share/man/man5/dselect.cfg.5.gz
-#   /usr/share/man/man8/cleanup-info.8.gz
-#   /usr/share/man/man8/install-info.8.gz
-#   /usr/share/man/man8/start-stop-daemon.8.gz
-#   /usr/share/man/pl/man1/dselect.1.gz
-#   /usr/share/man/pl/man5/dselect.cfg.5.gz
-#   /usr/share/man/pl/man8/cleanup-info.8.gz
-#   /usr/share/man/pl/man8/start-stop-daemon.8.gz
-#   /usr/share/man/sv/man1/dselect.1.gz
-#   /usr/share/man/sv/man5/dselect.cfg.5.gz
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
 Version:	1.14.4
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
@@ -89,6 +55,15 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man5/dselect.cfg.5
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/dselect.1
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/start-stop-daemon.8
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/cleanup-info.8
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/install-info.8
+rm -f $RPM_BUILD_ROOT%{_sbindir}/cleanup-info
+rm -f $RPM_BUILD_ROOT%{_sbindir}/install-info
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/alternatives/README
+
 %find_lang dpkg
 
 %clean
@@ -96,38 +71,54 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f dpkg.lang
 %defattr(644,root,root,755)
-#%doc $RPM_BUILD_ROOT%{_docdir}/%{name}/*
 %attr(755,root,root) %{_bindir}/822-date
 %attr(755,root,root) %{_bindir}/dpkg*
+
+%attr(755,root,root) %{_sbindir}/dpkg-divert
+%attr(755,root,root) %{_sbindir}/update-alternatives
+
+%dir %{_sysconfdir}/dpkg
+%dir %{_sysconfdir}/dpkg/origins
+%{_sysconfdir}/dpkg/origins/debian
+
 %dir %{_libdir}/dpkg
 %dir %{_libdir}/dpkg/parsechangelog
 %{_libdir}/dpkg/*.pl
+%attr(755,root,root) %{_libdir}/dpkg/enoent
 %attr(755,root,root) %{_libdir}/dpkg/mksplit
-%attr(755,root,root) %dir %{_libdir}/dpkg/parsechangelog/debian
-%attr(755,root,root) %{_sbindir}/dpkg-divert
-%attr(755,root,root) %{_sbindir}/update-alternatives
+%dir %{_libdir}/dpkg/parsechangelog
+%attr(755,root,root) %{_libdir}/dpkg/parsechangelog/debian
+
+%attr(755,root,root) %{_sbindir}/dpkg-statoverride
+
+%dir %{_datadir}/dpkg
+%{_datadir}/dpkg/cputable
+%{_datadir}/dpkg/ostable
+%{_datadir}/dpkg/triplettable
+
 %dir /var/lib/dpkg
 /var/lib/dpkg/*
+
 %{_mandir}/man1/822*
 %{_mandir}/man5/deb*
-%{_mandir}/man*/dpkg*
 %{_mandir}/man8/update*
+%{_mandir}/man*/dpkg*
 %lang(de) %{_mandir}/de/man1/822*
 %lang(de) %{_mandir}/de/man5/deb*
-%lang(de) %{_mandir}/de/man*/dpkg*
 %lang(de) %{_mandir}/de/man8/update*
+%lang(de) %{_mandir}/de/man*/dpkg*
 %lang(fr) %{_mandir}/fr/man1/822*
 %lang(fr) %{_mandir}/fr/man5/deb*
-%lang(fr) %{_mandir}/fr/man*/dpkg*
 %lang(fr) %{_mandir}/fr/man8/update*
+%lang(fr) %{_mandir}/fr/man*/dpkg*
 %lang(hu) %{_mandir}/hu/man5/deb*
 %lang(hu) %{_mandir}/hu/man*/dpkg*
 %lang(ja) %{_mandir}/ja/man5/deb*
-%lang(ja) %{_mandir}/ja/man*/dpkg*
 %lang(ja) %{_mandir}/ja/man8/update*
+%lang(ja) %{_mandir}/ja/man*/dpkg*
 %lang(pl) %{_mandir}/pl/man1/822*
-%lang(pl) %{_mandir}/pl/man*/dpkg*
 %lang(pl) %{_mandir}/pl/man8/update*
+%lang(pl) %{_mandir}/pl/man*/dpkg*
 %lang(ru) %{_mandir}/ru/man5/deb*
 %lang(ru) %{_mandir}/ru/man*/dpkg*
 %lang(sv) %{_mandir}/sv/man5/deb*
