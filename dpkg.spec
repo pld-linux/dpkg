@@ -1,8 +1,42 @@
+# TODO
+# - unpackaged:
+#   /etc/alternatives/README
+#   /etc/dpkg/origins/debian
+#   /usr/lib/dpkg/enoent
+#   /usr/sbin/cleanup-info
+#   /usr/sbin/dpkg-statoverride
+#   /usr/sbin/install-info
+#   /usr/share/dpkg/cputable
+#   /usr/share/dpkg/ostable
+#   /usr/share/dpkg/triplettable
+#   /usr/share/locale/ca/LC_MESSAGES/dpkg-dev.mo
+#   /usr/share/locale/fr/LC_MESSAGES/dpkg-dev.mo
+#   /usr/share/man/de/man5/dselect.cfg.5.gz
+#   /usr/share/man/de/man8/cleanup-info.8.gz
+#   /usr/share/man/de/man8/start-stop-daemon.8.gz
+#   /usr/share/man/fr/man1/dselect.1.gz
+#   /usr/share/man/fr/man5/dselect.cfg.5.gz
+#   /usr/share/man/fr/man8/cleanup-info.8.gz
+#   /usr/share/man/fr/man8/start-stop-daemon.8.gz
+#   /usr/share/man/hu/man5/dselect.cfg.5.gz
+#   /usr/share/man/ja/man1/dselect.1.gz
+#   /usr/share/man/ja/man8/cleanup-info.8.gz
+#   /usr/share/man/man1/dselect.1.gz
+#   /usr/share/man/man5/dselect.cfg.5.gz
+#   /usr/share/man/man8/cleanup-info.8.gz
+#   /usr/share/man/man8/install-info.8.gz
+#   /usr/share/man/man8/start-stop-daemon.8.gz
+#   /usr/share/man/pl/man1/dselect.1.gz
+#   /usr/share/man/pl/man5/dselect.cfg.5.gz
+#   /usr/share/man/pl/man8/cleanup-info.8.gz
+#   /usr/share/man/pl/man8/start-stop-daemon.8.gz
+#   /usr/share/man/sv/man1/dselect.1.gz
+#   /usr/share/man/sv/man5/dselect.cfg.5.gz
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
 Version:	1.14.4
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
