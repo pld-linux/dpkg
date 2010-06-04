@@ -1,12 +1,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.14.4
-Release:	2
+Version:	1.14.29
+Release:	1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
-# Source0-md5:	c9d6a52582bc39fa725b498e095d3ee1
+# Source0-md5:	4326172a959b5b6484b4bc126e9f628d
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -83,8 +83,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/dpkg
 %dir %{_libdir}/dpkg/parsechangelog
-%{_libdir}/dpkg/*.pl
-%attr(755,root,root) %{_libdir}/dpkg/enoent
 %attr(755,root,root) %{_libdir}/dpkg/mksplit
 %dir %{_libdir}/dpkg/parsechangelog
 %attr(755,root,root) %{_libdir}/dpkg/parsechangelog/debian
@@ -95,6 +93,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dpkg/cputable
 %{_datadir}/dpkg/ostable
 %{_datadir}/dpkg/triplettable
+%{perl_vendorlib}/*.pm
+%{perl_vendorlib}/Dpkg
 
 %dir /var/lib/dpkg
 /var/lib/dpkg/*
@@ -111,15 +111,14 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fr) %{_mandir}/fr/man5/deb*
 %lang(fr) %{_mandir}/fr/man8/update*
 %lang(fr) %{_mandir}/fr/man*/dpkg*
-%lang(hu) %{_mandir}/hu/man5/deb*
 %lang(hu) %{_mandir}/hu/man*/dpkg*
 %lang(ja) %{_mandir}/ja/man5/deb*
 %lang(ja) %{_mandir}/ja/man8/update*
-%lang(ja) %{_mandir}/ja/man*/dpkg*
 %lang(pl) %{_mandir}/pl/man1/822*
+%lang(pl) %{_mandir}/pl/man5/deb*
 %lang(pl) %{_mandir}/pl/man8/update*
 %lang(pl) %{_mandir}/pl/man*/dpkg*
-%lang(ru) %{_mandir}/ru/man5/deb*
-%lang(ru) %{_mandir}/ru/man*/dpkg*
+%lang(sv) %{_mandir}/sv/man1/822*
 %lang(sv) %{_mandir}/sv/man5/deb*
 %lang(sv) %{_mandir}/sv/man*/dpkg*
+%lang(sv) %{_mandir}/sv/man8/update*
