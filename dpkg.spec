@@ -1,12 +1,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.14.29
+Version:	1.14.30
 Release:	1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
-# Source0-md5:	4326172a959b5b6484b4bc126e9f628d
+# Source0-md5:	e2845304af0dad33a33437023e4a1fa1
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
