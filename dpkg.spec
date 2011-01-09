@@ -1,12 +1,13 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.14.30
+Version:	1.15.8.8
 Release:	1
-License:	GPL
+License:	GPL v2+
 Group:		Applications/File
-Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.gz
-# Source0-md5:	e2845304af0dad33a33437023e4a1fa1
+Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.bz2
+# Source0-md5:	39600c01d03c997bc12898ff85424377
+URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -19,33 +20,39 @@ Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-This package contains the programs which handle the installation and
-removal of packages on your system.
-
-The primary interface for the dpkg suite is the `dselect' program; a
-more low-level and less user-friendly interface is available in the
-form of the `dpkg' command.
-
-In order to unpack and build Debian source packages you will need to
-install the developers' package `dpkg-dev' as well as this one.
+This package contains the programs to handle deb packages known from
+Debian.
 
 %description -l pl.UTF-8
 Ten pakiet zawiera narzędzia do obsługi pakietów deb znanych z
 Debiana.
+
+%package -n libdpkg-devel
+Summary:	dpkg library and header files
+Summary(pl.UTF-8):	Biblioteka i pliki nagłówkowe dpkg
+Group:		Development/Libraries
+
+%description -n libdpkg-devel
+dpkg library and header files.
+
+%description -n libdpkg-devel -l pl.UTF-8
+Biblioteka i pliki nagłówkowe dpkg.
 
 %prep
 %setup -q
 
 %build
 %configure \
+	--disable-silent-rules \
 	--enable-shared \
 	--without-dselect \
+	--without-install-info \
 	--without-start-stop-daemon \
 	--with-zlib \
 	--with-bz2 \
 	--with-selinux \
-	--with-admindir=/var/lib/%{name} \
-	SELINUX_LIBS=-lselinux
+	--with-admindir=/var/lib/%{name}
+#	SELINUX_LIBS=-lselinux
 
 %{__make}
 
@@ -55,70 +62,79 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man5/dselect.cfg.5
-rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/dselect.1
-rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/start-stop-daemon.8
-rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/cleanup-info.8
-rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/install-info.8
-rm -f $RPM_BUILD_ROOT%{_sbindir}/cleanup-info
-rm -f $RPM_BUILD_ROOT%{_sbindir}/install-info
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/alternatives/README
+%{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/alternatives/README
 
+# dpkg for main part, dpkg-dev for perl-based build script
+# don't use --all-name to avoid e.g. dselect inclusion
 %find_lang dpkg
+%find_lang dpkg-dev
+cat dpkg-dev.lang >>dpkg.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files -f dpkg.lang
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/822-date
+%doc AUTHORS ChangeLog README THANKS TODO
 %attr(755,root,root) %{_bindir}/dpkg*
-
-%attr(755,root,root) %{_sbindir}/dpkg-divert
-%attr(755,root,root) %{_sbindir}/update-alternatives
-
+%attr(755,root,root) %{_bindir}/update-alternatives
+%dir %{_sysconfdir}/alternatives
 %dir %{_sysconfdir}/dpkg
-%dir %{_sysconfdir}/dpkg/origins
-%{_sysconfdir}/dpkg/origins/debian
+%dir %{_sysconfdir}/dpkg/dpkg.cfg.d
 
 %dir %{_libdir}/dpkg
 %dir %{_libdir}/dpkg/parsechangelog
-%attr(755,root,root) %{_libdir}/dpkg/mksplit
-%dir %{_libdir}/dpkg/parsechangelog
 %attr(755,root,root) %{_libdir}/dpkg/parsechangelog/debian
-
-%attr(755,root,root) %{_sbindir}/dpkg-statoverride
-
 %dir %{_datadir}/dpkg
 %{_datadir}/dpkg/cputable
 %{_datadir}/dpkg/ostable
 %{_datadir}/dpkg/triplettable
-%{perl_vendorlib}/*.pm
+
+%{perl_vendorlib}/Dpkg.pm
 %{perl_vendorlib}/Dpkg
 
 %dir /var/lib/dpkg
-/var/lib/dpkg/*
+%dir /var/lib/dpkg/alternatives
+%dir /var/lib/dpkg/info
+%dir /var/lib/dpkg/parts
+%dir /var/lib/dpkg/updates
 
-%{_mandir}/man1/822*
-%{_mandir}/man5/deb*
-%{_mandir}/man8/update*
-%{_mandir}/man*/dpkg*
-%lang(de) %{_mandir}/de/man1/822*
-%lang(de) %{_mandir}/de/man5/deb*
-%lang(de) %{_mandir}/de/man8/update*
-%lang(de) %{_mandir}/de/man*/dpkg*
-%lang(fr) %{_mandir}/fr/man1/822*
-%lang(fr) %{_mandir}/fr/man5/deb*
-%lang(fr) %{_mandir}/fr/man8/update*
-%lang(fr) %{_mandir}/fr/man*/dpkg*
-%lang(hu) %{_mandir}/hu/man*/dpkg*
-%lang(ja) %{_mandir}/ja/man5/deb*
-%lang(ja) %{_mandir}/ja/man8/update*
-%lang(pl) %{_mandir}/pl/man1/822*
-%lang(pl) %{_mandir}/pl/man5/deb*
-%lang(pl) %{_mandir}/pl/man8/update*
-%lang(pl) %{_mandir}/pl/man*/dpkg*
-%lang(sv) %{_mandir}/sv/man1/822*
-%lang(sv) %{_mandir}/sv/man5/deb*
-%lang(sv) %{_mandir}/sv/man*/dpkg*
-%lang(sv) %{_mandir}/sv/man8/update*
+%{_mandir}/man1/dpkg*.1*
+%{_mandir}/man3/Dpkg::*.3*
+%{_mandir}/man5/deb*.5*
+%{_mandir}/man5/dpkg.cfg.5*
+%{_mandir}/man8/dpkg-*.8*
+%{_mandir}/man8/update-alternatives.8*
+%lang(de) %{_mandir}/de/man1/dpkg*.1*
+%lang(de) %{_mandir}/de/man5/deb*.5*
+%lang(de) %{_mandir}/de/man5/dpkg.cfg.5*
+%lang(de) %{_mandir}/de/man8/dpkg-*.8*
+%lang(de) %{_mandir}/de/man8/update-alternatives.8*
+%lang(es) %{_mandir}/es/man1/dpkg*.1*
+%lang(es) %{_mandir}/es/man5/deb*.5*
+%lang(es) %{_mandir}/es/man5/dpkg.cfg.5*
+%lang(es) %{_mandir}/es/man8/dpkg-*.8*
+%lang(es) %{_mandir}/es/man8/update-alternatives.8*
+%lang(fr) %{_mandir}/fr/man1/dpkg*.1*
+%lang(fr) %{_mandir}/fr/man5/deb*.5*
+%lang(fr) %{_mandir}/fr/man5/dpkg.cfg.5*
+%lang(fr) %{_mandir}/fr/man8/dpkg-*.8*
+%lang(fr) %{_mandir}/fr/man8/update-alternatives.8*
+%lang(hu) %{_mandir}/hu/man5/dpkg.cfg.5*
+%lang(ja) %{_mandir}/ja/man5/deb-old.5*
+%lang(pl) %{_mandir}/pl/man1/dpkg*.1*
+%lang(pl) %{_mandir}/pl/man5/deb*.5*
+%lang(pl) %{_mandir}/pl/man5/dpkg.cfg.5*
+%lang(pl) %{_mandir}/pl/man8/dpkg-*.8*
+%lang(pl) %{_mandir}/pl/man8/update-alternatives.8*
+%lang(sv) %{_mandir}/sv/man1/dpkg*.1*
+%lang(sv) %{_mandir}/sv/man5/deb*.5*
+%lang(sv) %{_mandir}/sv/man5/dpkg.cfg.5*
+%lang(sv) %{_mandir}/sv/man8/dpkg-*.8*
+%lang(sv) %{_mandir}/sv/man8/update-alternatives.8*
+
+%files -n libdpkg-devel
+%defattr(644,root,root,755)
+%{_libdir}/libdpkg.a
+%{_includedir}/dpkg
+%{_pkgconfigdir}/libdpkg.pc
