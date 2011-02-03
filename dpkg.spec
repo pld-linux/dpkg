@@ -1,19 +1,16 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.15.8.8
+Version:	1.15.8.10
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.bz2
-# Source0-md5:	39600c01d03c997bc12898ff85424377
+# Source0-md5:	bce745c7083ace01da1df6cdcad35f9a
 URL:		http://packages.debian.org/search?keywords=dpkg
-BuildRequires:	autoconf
-BuildRequires:	automake
 BuildRequires:	bzip2-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-devel >= 0.18
 BuildRequires:	libselinux-devel
-BuildRequires:	libtool
 BuildRequires:	perl-tools-pod
 BuildRequires:	zlib-devel
 Requires:	perl-base
@@ -52,7 +49,6 @@ Biblioteka i pliki nagłówkowe dpkg.
 	--with-bz2 \
 	--with-selinux \
 	--with-admindir=/var/lib/%{name}
-#	SELINUX_LIBS=-lselinux
 
 %{__make}
 
