@@ -1,3 +1,4 @@
+%include	/usr/lib/rpm/macros.perl
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
@@ -12,6 +13,9 @@ BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel >= 0.18
 BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
+BuildRequires:	pkgconfig
+BuildRequires:	po4a
+BuildRequires:	rpm-perlprov
 BuildRequires:	zlib-devel
 Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
