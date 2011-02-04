@@ -14,7 +14,6 @@ BuildRequires:	gettext-devel >= 0.18
 BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
-BuildRequires:	po4a
 BuildRequires:	rpm-perlprov
 BuildRequires:	zlib-devel
 Requires:	perl-base
@@ -44,6 +43,7 @@ Biblioteka i pliki nagłówkowe dpkg.
 
 %build
 %configure \
+	PO4A="true" \
 	--disable-silent-rules \
 	--enable-shared \
 	--without-dselect \
