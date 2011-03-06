@@ -3,7 +3,7 @@ Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
 Version:	1.15.8.10
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.bz2
@@ -18,6 +18,9 @@ BuildRequires:	rpm-perlprov
 BuildRequires:	zlib-devel
 Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# blacklist false positives
+%define		_noautoreq	'perl(extra)' 'perl(file)' 'perl(in)' 
 
 %description
 This package contains the programs to handle deb packages known from
