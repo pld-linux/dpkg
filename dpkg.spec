@@ -2,12 +2,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.16.0.3
+Version:	1.16.1.2
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.bz2
-# Source0-md5:	0266b06ef9da8278cea008d21e17e5f6
+# Source0-md5:	068ae5e650e54968230de19d6c4e2241
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel >= 0.18
