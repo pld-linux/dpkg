@@ -2,12 +2,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.16.2
+Version:	1.16.3
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.bz2
-# Source0-md5:	629ba7ee2024e6a5c0ff807aa2db02f8
+# Source0-md5:	20189e2926ada3dda4f77ef2e36999af
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel >= 0.18
@@ -73,6 +73,19 @@ rm -rf $RPM_BUILD_ROOT
 %find_lang dpkg-dev
 cat dpkg-dev.lang >>dpkg.lang
 
+# dselect is not packaged
+%{__rm} -r $RPM_BUILD_ROOT%{_bindir}/dselect \
+	$RPM_BUILD_ROOT%{_libdir}/dpkg/methods \
+	$RPM_BUILD_ROOT%{_localedir}/*/LC_MESSAGES/dselect.mo \
+	$RPM_BUILD_ROOT%{_mandir}{,/*}/man1/dselect.1 \
+	$RPM_BUILD_ROOT%{_mandir}{,/*}/man5/dselect.cfg.5 \
+	$RPM_BUILD_ROOT%{perl_vendorlib}/Debian/Dselect
+# part of info package in PLD; anyway, fix-info-dir is used instead
+%{__rm} $RPM_BUILD_ROOT%{_sbindir}/install-info
+# merged into rc-scripts in PLD
+%{__rm} $RPM_BUILD_ROOT%{_sbindir}/start-stop-daemon \
+	$RPM_BUILD_ROOT%{_mandir}{,/*}/man8/start-stop-daemon.8
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -89,6 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/dpkg/parsechangelog
 %attr(755,root,root) %{_libdir}/dpkg/parsechangelog/debian
 %dir %{_datadir}/dpkg
+%{_datadir}/dpkg/abitable
 %{_datadir}/dpkg/cputable
 %{_datadir}/dpkg/ostable
 %{_datadir}/dpkg/triplettable
