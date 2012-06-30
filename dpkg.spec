@@ -2,12 +2,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.16.4.2
+Version:	1.16.5
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
-Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.bz2
-# Source0-md5:	537b1861b9842ad350f0b64705aa7aaa
+Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
+# Source0-md5:	c70412c8b0f3609680104585ddb4ba5c
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel >= 0.18
@@ -15,6 +15,9 @@ BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
 Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -47,14 +50,10 @@ Biblioteka i pliki nagłówkowe dpkg.
 %build
 %configure \
 	PO4A="true" \
+	--disable-dselect \
+	--disable-install-info \
 	--disable-silent-rules \
-	--enable-shared \
-	--without-dselect \
-	--without-install-info \
-	--without-start-stop-daemon \
-	--with-zlib \
-	--with-bz2 \
-	--with-selinux \
+	--disable-start-stop-daemon \
 	--with-admindir=/var/lib/%{name}
 
 %{__make}
@@ -72,19 +71,6 @@ rm -rf $RPM_BUILD_ROOT
 %find_lang dpkg
 %find_lang dpkg-dev
 cat dpkg-dev.lang >>dpkg.lang
-
-# dselect is not packaged
-%{__rm} -r $RPM_BUILD_ROOT%{_bindir}/dselect \
-	$RPM_BUILD_ROOT%{_libdir}/dpkg/methods \
-	$RPM_BUILD_ROOT%{_localedir}/*/LC_MESSAGES/dselect.mo \
-	$RPM_BUILD_ROOT%{_mandir}{,/*}/man1/dselect.1 \
-	$RPM_BUILD_ROOT%{_mandir}{,/*}/man5/dselect.cfg.5 \
-	$RPM_BUILD_ROOT%{perl_vendorlib}/Debian/Dselect
-# part of info package in PLD; anyway, fix-info-dir is used instead
-%{__rm} $RPM_BUILD_ROOT%{_sbindir}/install-info
-# merged into rc-scripts in PLD
-%{__rm} $RPM_BUILD_ROOT%{_sbindir}/start-stop-daemon \
-	$RPM_BUILD_ROOT%{_mandir}{,/*}/man8/start-stop-daemon.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
