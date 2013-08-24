@@ -2,18 +2,20 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.16.10
-Release:	2
+Version:	1.17.1
+Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	a20a06a5272717274a8b009368f237da
+# Source0-md5:	ece3ae87a099158c17bde95c0036c575
+Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
-BuildRequires:	gettext-devel >= 0.18
+BuildRequires:	gettext-devel >= 0.18.2
 BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	rpm-perlprov
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -49,12 +51,12 @@ Biblioteka i pliki nagłówkowe dpkg.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure \
 	PO4A="true" \
 	--disable-dselect \
-	--disable-install-info \
 	--disable-silent-rules \
 	--disable-start-stop-daemon \
 	--with-admindir=/var/lib/%{name}
@@ -128,6 +130,10 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fr) %{_mandir}/fr/man8/dpkg-*.8*
 %lang(fr) %{_mandir}/fr/man8/update-alternatives.8*
 %lang(hu) %{_mandir}/hu/man5/dpkg.cfg.5*
+%lang(it) %{_mandir}/it/man1/dpkg*.1*
+%lang(it) %{_mandir}/it/man5/deb*.5*
+%lang(it) %{_mandir}/it/man5/dpkg.cfg.5*
+%lang(it) %{_mandir}/it/man8/update-alternatives.8*
 %lang(ja) %{_mandir}/ja/man1/dpkg*.1*
 %lang(ja) %{_mandir}/ja/man5/deb*.5*
 %lang(ja) %{_mandir}/ja/man5/dpkg.cfg.5*
