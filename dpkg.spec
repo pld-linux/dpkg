@@ -2,12 +2,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.17.6
+Version:	1.17.10
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	c87f2ae291d460015353e01d121bea85
+# Source0-md5:	545f3cbac8b5f0b3d888574f3f79936c
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/alternatives/README
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libdpkg.la
+
 # dpkg for main part, dpkg-dev for perl-based build script
 # don't use --all-name to avoid e.g. dselect inclusion
 %find_lang dpkg
@@ -133,6 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(it) %{_mandir}/it/man1/dpkg*.1*
 %lang(it) %{_mandir}/it/man5/deb*.5*
 %lang(it) %{_mandir}/it/man5/dpkg.cfg.5*
+%lang(it) %{_mandir}/it/man8/dpkg-*.8*
 %lang(it) %{_mandir}/it/man8/update-alternatives.8*
 %lang(ja) %{_mandir}/ja/man1/dpkg*.1*
 %lang(ja) %{_mandir}/ja/man5/deb*.5*
