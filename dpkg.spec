@@ -11,7 +11,7 @@ Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
-BuildRequires:	gettext-devel >= 0.18.2
+BuildRequires:	gettext-tools >= 0.18.2
 BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
