@@ -3,7 +3,7 @@ Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
 Version:	1.17.10
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
