@@ -2,12 +2,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.17.10
-Release:	2
+Version:	1.17.24
+Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	545f3cbac8b5f0b3d888574f3f79936c
+# Source0-md5:	4c62dd2675ea75759faf03e2c758a805
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
@@ -112,6 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dpkg/updates
 
 %{_mandir}/man1/dpkg*.1*
+%{_mandir}/man3/Dpkg.3*
 %{_mandir}/man3/Dpkg::*.3*
 %{_mandir}/man5/deb*.5*
 %{_mandir}/man5/dpkg.cfg.5*
