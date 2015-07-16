@@ -2,12 +2,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.17.25
+Version:	1.18.1
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	e48fcfdb2162e77d72c2a83432d537ca
+# Source0-md5:	809169e14489dbcc603dc011381fdc67
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
@@ -54,7 +54,10 @@ Biblioteka i pliki nagłówkowe dpkg.
 %patch0 -p1
 
 %build
+# "ac_cv_header_md5_h=no" to disable error on md5.h from libmd5
+# (dpkg expects this header from FreeBSD-compatible libmd, having different API)
 %configure \
+	ac_cv_header_md5_h=no \
 	PO4A="true" \
 	--disable-dselect \
 	--disable-silent-rules \
@@ -112,48 +115,40 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dpkg/updates
 
 %{_mandir}/man1/dpkg*.1*
+%{_mandir}/man1/update-alternatives.1*
 %{_mandir}/man3/Dpkg.3*
 %{_mandir}/man3/Dpkg::*.3*
 %{_mandir}/man5/deb*.5*
 %{_mandir}/man5/dpkg.cfg.5*
-%{_mandir}/man8/dpkg-*.8*
-%{_mandir}/man8/update-alternatives.8*
 %lang(de) %{_mandir}/de/man1/dpkg*.1*
+%lang(de) %{_mandir}/de/man1/update-alternatives.1*
 %lang(de) %{_mandir}/de/man5/deb*.5*
 %lang(de) %{_mandir}/de/man5/dpkg.cfg.5*
-%lang(de) %{_mandir}/de/man8/dpkg-*.8*
-%lang(de) %{_mandir}/de/man8/update-alternatives.8*
 %lang(es) %{_mandir}/es/man1/dpkg*.1*
+%lang(es) %{_mandir}/es/man1/update-alternatives.1*
 %lang(es) %{_mandir}/es/man5/deb*.5*
 %lang(es) %{_mandir}/es/man5/dpkg.cfg.5*
-%lang(es) %{_mandir}/es/man8/dpkg-*.8*
-%lang(es) %{_mandir}/es/man8/update-alternatives.8*
 %lang(fr) %{_mandir}/fr/man1/dpkg*.1*
+%lang(fr) %{_mandir}/fr/man1/update-alternatives.1*
 %lang(fr) %{_mandir}/fr/man5/deb*.5*
 %lang(fr) %{_mandir}/fr/man5/dpkg.cfg.5*
-%lang(fr) %{_mandir}/fr/man8/dpkg-*.8*
-%lang(fr) %{_mandir}/fr/man8/update-alternatives.8*
 %lang(hu) %{_mandir}/hu/man5/dpkg.cfg.5*
 %lang(it) %{_mandir}/it/man1/dpkg*.1*
+%lang(it) %{_mandir}/it/man1/update-alternatives.1*
 %lang(it) %{_mandir}/it/man5/deb*.5*
 %lang(it) %{_mandir}/it/man5/dpkg.cfg.5*
-%lang(it) %{_mandir}/it/man8/dpkg-*.8*
-%lang(it) %{_mandir}/it/man8/update-alternatives.8*
 %lang(ja) %{_mandir}/ja/man1/dpkg*.1*
+%lang(ja) %{_mandir}/ja/man1/update-alternatives.1*
 %lang(ja) %{_mandir}/ja/man5/deb*.5*
 %lang(ja) %{_mandir}/ja/man5/dpkg.cfg.5*
-%lang(ja) %{_mandir}/ja/man8/dpkg*.8*
-%lang(ja) %{_mandir}/ja/man8/update-alternatives.8*
 %lang(pl) %{_mandir}/pl/man1/dpkg*.1*
+%lang(pl) %{_mandir}/pl/man1/update-alternatives.1*
 %lang(pl) %{_mandir}/pl/man5/deb*.5*
 %lang(pl) %{_mandir}/pl/man5/dpkg.cfg.5*
-%lang(pl) %{_mandir}/pl/man8/dpkg-*.8*
-%lang(pl) %{_mandir}/pl/man8/update-alternatives.8*
 %lang(sv) %{_mandir}/sv/man1/dpkg*.1*
+%lang(sv) %{_mandir}/sv/man1/update-alternatives.1*
 %lang(sv) %{_mandir}/sv/man5/deb*.5*
 %lang(sv) %{_mandir}/sv/man5/dpkg.cfg.5*
-%lang(sv) %{_mandir}/sv/man8/dpkg-*.8*
-%lang(sv) %{_mandir}/sv/man8/update-alternatives.8*
 
 %files -n libdpkg-devel
 %defattr(644,root,root,755)
