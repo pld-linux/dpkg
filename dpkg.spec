@@ -2,12 +2,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.18.3
+Version:	1.18.4
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	a5ca138121cc37c8fb0083462a3b4d47
+# Source0-md5:	e95b513c89693f6ec3ab53b6b1c3defd
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
