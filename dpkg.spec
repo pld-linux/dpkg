@@ -1,9 +1,12 @@
+# TODO
+# - use same dir as chkconfig based "alternatives"-implementation for state dir?
+# - move it (/var/lib/dpkg/alternatives) to alternatives package?
 %include	/usr/lib/rpm/macros.perl
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
 Version:	1.18.4
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
@@ -15,8 +18,8 @@ BuildRequires:	gettext-tools >= 0.18.2
 BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	rpm-perlprov
+BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	xz-devel
@@ -48,6 +51,24 @@ dpkg library and header files.
 
 %description -n libdpkg-devel -l pl.UTF-8
 Biblioteka i pliki nagłówkowe dpkg.
+
+%package alternatives
+Summary:	Maintain symbolic links determining default commands
+Summary(pl.UTF-8):	Utrzymywanie dowiązań symbolicznych określających domyślne polecenia
+Group:		Applications/System
+Requires:	%{name} = %{version}-%{release}
+
+%description alternatives
+alternatives creates, removes, maintains and displays information
+about the symbolic links comprising the alternatives system. The
+alternatives system is a reimplementation of the Debian alternatives
+system.
+
+%description alternatives -l pl.UTF-8
+alternatives tworzy, usuwa, utrzymuje i wyświetla informacje o
+dowiązaniach symbolicznych obejmujących system alternatyw. System
+alternatyw to reimplementacja systemu alternatyw ("alternatives") z
+Debiana.
 
 %prep
 %setup -q
@@ -90,8 +111,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README THANKS TODO
 %attr(755,root,root) %{_bindir}/dpkg*
-%attr(755,root,root) %{_bindir}/update-alternatives
-%dir %{_sysconfdir}/alternatives
 %dir %{_sysconfdir}/dpkg
 %dir %{_sysconfdir}/dpkg/dpkg.cfg.d
 
@@ -115,38 +134,30 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dpkg/updates
 
 %{_mandir}/man1/dpkg*.1*
-%{_mandir}/man1/update-alternatives.1*
 %{_mandir}/man3/Dpkg.3*
 %{_mandir}/man3/Dpkg::*.3*
 %{_mandir}/man5/deb*.5*
 %{_mandir}/man5/dpkg.cfg.5*
 %lang(de) %{_mandir}/de/man1/dpkg*.1*
-%lang(de) %{_mandir}/de/man1/update-alternatives.1*
 %lang(de) %{_mandir}/de/man5/deb*.5*
 %lang(de) %{_mandir}/de/man5/dpkg.cfg.5*
 %lang(es) %{_mandir}/es/man1/dpkg*.1*
-%lang(es) %{_mandir}/es/man1/update-alternatives.1*
 %lang(es) %{_mandir}/es/man5/deb*.5*
 %lang(es) %{_mandir}/es/man5/dpkg.cfg.5*
 %lang(fr) %{_mandir}/fr/man1/dpkg*.1*
-%lang(fr) %{_mandir}/fr/man1/update-alternatives.1*
 %lang(fr) %{_mandir}/fr/man5/deb*.5*
 %lang(fr) %{_mandir}/fr/man5/dpkg.cfg.5*
 %lang(hu) %{_mandir}/hu/man5/dpkg.cfg.5*
 %lang(it) %{_mandir}/it/man1/dpkg*.1*
-%lang(it) %{_mandir}/it/man1/update-alternatives.1*
 %lang(it) %{_mandir}/it/man5/deb*.5*
 %lang(it) %{_mandir}/it/man5/dpkg.cfg.5*
 %lang(ja) %{_mandir}/ja/man1/dpkg*.1*
-%lang(ja) %{_mandir}/ja/man1/update-alternatives.1*
 %lang(ja) %{_mandir}/ja/man5/deb*.5*
 %lang(ja) %{_mandir}/ja/man5/dpkg.cfg.5*
 %lang(pl) %{_mandir}/pl/man1/dpkg*.1*
-%lang(pl) %{_mandir}/pl/man1/update-alternatives.1*
 %lang(pl) %{_mandir}/pl/man5/deb*.5*
 %lang(pl) %{_mandir}/pl/man5/dpkg.cfg.5*
 %lang(sv) %{_mandir}/sv/man1/dpkg*.1*
-%lang(sv) %{_mandir}/sv/man1/update-alternatives.1*
 %lang(sv) %{_mandir}/sv/man5/deb*.5*
 %lang(sv) %{_mandir}/sv/man5/dpkg.cfg.5*
 
@@ -155,3 +166,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdpkg.a
 %{_includedir}/dpkg
 %{_pkgconfigdir}/libdpkg.pc
+
+%files alternatives
+%defattr(644,root,root,755)
+%dir %{_sysconfdir}/alternatives
+%attr(755,root,root) %{_bindir}/update-alternatives
+%{_mandir}/man1/update-alternatives.1*
+%lang(de) %{_mandir}/de/man1/update-alternatives.1*
+%lang(es) %{_mandir}/es/man1/update-alternatives.1*
+%lang(fr) %{_mandir}/fr/man1/update-alternatives.1*
+%lang(it) %{_mandir}/it/man1/update-alternatives.1*
+%lang(ja) %{_mandir}/ja/man1/update-alternatives.1*
+%lang(pl) %{_mandir}/pl/man1/update-alternatives.1*
+%lang(sv) %{_mandir}/sv/man1/update-alternatives.1*
