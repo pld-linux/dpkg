@@ -1,12 +1,13 @@
-# TODO
-# - use same dir as chkconfig based "alternatives"-implementation for state dir?
-# - move it (/var/lib/dpkg/alternatives) to alternatives package?
+#
+# Conditional build:
+%bcond_with	alternatives	# build alternatives package
+
 %include	/usr/lib/rpm/macros.perl
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
 Version:	1.18.4
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
@@ -81,6 +82,7 @@ Debiana.
 	ac_cv_header_md5_h=no \
 	PO4A="true" \
 	--disable-dselect \
+	%{!?with_alternatives:--disable-update-alternatives} \
 	--disable-silent-rules \
 	--disable-start-stop-daemon \
 	--with-admindir=/var/lib/%{name}
@@ -89,11 +91,12 @@ Debiana.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%if %{with alternatives}
 %{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/alternatives/README
+%endif
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libdpkg.la
@@ -128,7 +131,6 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorlib}/Dpkg
 
 %dir /var/lib/dpkg
-%dir /var/lib/dpkg/alternatives
 %dir /var/lib/dpkg/info
 %dir /var/lib/dpkg/parts
 %dir /var/lib/dpkg/updates
@@ -167,6 +169,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/dpkg
 %{_pkgconfigdir}/libdpkg.pc
 
+%if %{with alternatives}
 %files alternatives
 %defattr(644,root,root,755)
 %dir %{_sysconfdir}/alternatives
@@ -179,3 +182,5 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/update-alternatives.1*
 %lang(pl) %{_mandir}/pl/man1/update-alternatives.1*
 %lang(sv) %{_mandir}/sv/man1/update-alternatives.1*
+%dir /var/lib/dpkg/alternatives
+%endif
