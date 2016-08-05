@@ -6,16 +6,16 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.18.4
-Release:	3
+Version:	1.18.10
+Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	e95b513c89693f6ec3ab53b6b1c3defd
+# Source0-md5:	ccff17730c0964428fc186ded2f2f401
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
-BuildRequires:	gettext-tools >= 0.18.2
+BuildRequires:	gettext-tools >= 0.19
 BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
@@ -117,9 +117,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/dpkg
 %dir %{_sysconfdir}/dpkg/dpkg.cfg.d
 
-%dir %{_libdir}/dpkg
-%dir %{_libdir}/dpkg/parsechangelog
-%attr(755,root,root) %{_libdir}/dpkg/parsechangelog/debian
 %dir %{_datadir}/dpkg
 %{_datadir}/dpkg/abitable
 %{_datadir}/dpkg/cputable
@@ -140,22 +137,26 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Dpkg::*.3*
 %{_mandir}/man5/deb*.5*
 %{_mandir}/man5/dpkg.cfg.5*
+%{_mandir}/man5/dsc.5*
 %lang(de) %{_mandir}/de/man1/dpkg*.1*
 %lang(de) %{_mandir}/de/man5/deb*.5*
 %lang(de) %{_mandir}/de/man5/dpkg.cfg.5*
+%lang(de) %{_mandir}/de/man5/dsc.5*
 %lang(es) %{_mandir}/es/man1/dpkg*.1*
 %lang(es) %{_mandir}/es/man5/deb*.5*
 %lang(es) %{_mandir}/es/man5/dpkg.cfg.5*
 %lang(fr) %{_mandir}/fr/man1/dpkg*.1*
 %lang(fr) %{_mandir}/fr/man5/deb*.5*
 %lang(fr) %{_mandir}/fr/man5/dpkg.cfg.5*
-%lang(hu) %{_mandir}/hu/man5/dpkg.cfg.5*
 %lang(it) %{_mandir}/it/man1/dpkg*.1*
 %lang(it) %{_mandir}/it/man5/deb*.5*
 %lang(it) %{_mandir}/it/man5/dpkg.cfg.5*
 %lang(ja) %{_mandir}/ja/man1/dpkg*.1*
 %lang(ja) %{_mandir}/ja/man5/deb*.5*
 %lang(ja) %{_mandir}/ja/man5/dpkg.cfg.5*
+%lang(nl) %{_mandir}/nl/man1/dpkg*.1*
+%lang(nl) %{_mandir}/nl/man5/deb*.5*
+%lang(nl) %{_mandir}/nl/man5/dpkg.cfg.5*
 %lang(pl) %{_mandir}/pl/man1/dpkg*.1*
 %lang(pl) %{_mandir}/pl/man5/deb*.5*
 %lang(pl) %{_mandir}/pl/man5/dpkg.cfg.5*
