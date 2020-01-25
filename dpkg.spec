@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_with	alternatives	# build alternatives package
 
-%include	/usr/lib/rpm/macros.perl
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
