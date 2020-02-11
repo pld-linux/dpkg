@@ -9,7 +9,7 @@ Version:	1.18.10
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
-Source0:	ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
+Source0:	http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
 # Source0-md5:	ccff17730c0964428fc186ded2f2f401
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
