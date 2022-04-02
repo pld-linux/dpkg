@@ -5,12 +5,12 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.18.10
+Version:	1.21.7
 Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	ccff17730c0964428fc186ded2f2f401
+# Source0-md5:	2c6686bd991810ce8a87469a7f20b415
 Patch0:		%{name}-md5.patch
 URL:		http://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
@@ -70,6 +70,20 @@ dowiązaniach symbolicznych obejmujących system alternatyw. System
 alternatyw to reimplementacja systemu alternatyw ("alternatives") z
 Debiana.
 
+%package -n zsh-completion-dpkg
+Summary:        ZSH completion for dpkg command
+Summary(pl.UTF-8):      Dopełnianianie parametrów w ZSH dla polecenia dpkg
+Group:          Applications/Shells
+Requires:       %{name} = %{version}-%{release}
+Requires:       zsh
+BuildArch:      noarch
+
+%description -n zsh-completion-dpkg
+ZSH completion for dpkg command.
+
+%description -n zsh-completion-dpkg -l pl.UTF-8
+Dopełnianianie parametrów w ZSH dla polecenia dpkg.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -80,6 +94,7 @@ Debiana.
 %configure \
 	ac_cv_header_md5_h=no \
 	PO4A="true" \
+	--disable-devel-docs \
 	--disable-dselect \
 	%{!?with_alternatives:--disable-update-alternatives} \
 	--disable-silent-rules \
@@ -97,6 +112,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_sysconfdir}/alternatives/README
 %endif
 
+# packaged as doc
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/doc/dpkg
+
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libdpkg.la
 
@@ -113,6 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README THANKS TODO
 %attr(755,root,root) %{_bindir}/dpkg*
+%attr(755,root,root) %{_sbindir}/dpkg-fsys-usrunmess
 %dir %{_sysconfdir}/dpkg
 %dir %{_sysconfdir}/dpkg/dpkg.cfg.d
 
@@ -120,8 +139,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dpkg/abitable
 %{_datadir}/dpkg/cputable
 %{_datadir}/dpkg/ostable
-%{_datadir}/dpkg/triplettable
+%{_datadir}/dpkg/tupletable
 %{_datadir}/dpkg/*.mk
+%{_datadir}/dpkg/*.specs
+
+%dir %{_datadir}/dpkg/sh
+%{_datadir}/dpkg/sh/dpkg-error.sh
+
+%dir %{_libexecdir}/dpkg
+%attr(755,root,root) %{_libexecdir}/dpkg/dpkg-db-backup
 
 %{perl_vendorlib}/Dpkg.pm
 %{perl_vendorlib}/Dpkg
@@ -137,16 +163,23 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/deb*.5*
 %{_mandir}/man5/dpkg.cfg.5*
 %{_mandir}/man5/dsc.5*
+%{_mandir}/man7/deb-version.7*
+%{_mandir}/man8/dpkg-fsys-usrunmess.8.*
 %lang(de) %{_mandir}/de/man1/dpkg*.1*
 %lang(de) %{_mandir}/de/man5/deb*.5*
 %lang(de) %{_mandir}/de/man5/dpkg.cfg.5*
 %lang(de) %{_mandir}/de/man5/dsc.5*
+%lang(de) %{_mandir}/de/man7/deb-version.7*
+%lang(de) %{_mandir}/de/man8/dpkg-fsys-usrunmess.8.*
 %lang(es) %{_mandir}/es/man1/dpkg*.1*
 %lang(es) %{_mandir}/es/man5/deb*.5*
 %lang(es) %{_mandir}/es/man5/dpkg.cfg.5*
 %lang(fr) %{_mandir}/fr/man1/dpkg*.1*
 %lang(fr) %{_mandir}/fr/man5/deb*.5*
 %lang(fr) %{_mandir}/fr/man5/dpkg.cfg.5*
+%lang(fr) %{_mandir}/fr/man5/dsc.5*
+%lang(fr) %{_mandir}/fr/man7/deb-version.7*
+%lang(hu) %{_mandir}/hu/man5/dpkg.cfg.5*
 %lang(it) %{_mandir}/it/man1/dpkg*.1*
 %lang(it) %{_mandir}/it/man5/deb*.5*
 %lang(it) %{_mandir}/it/man5/dpkg.cfg.5*
@@ -156,17 +189,31 @@ rm -rf $RPM_BUILD_ROOT
 %lang(nl) %{_mandir}/nl/man1/dpkg*.1*
 %lang(nl) %{_mandir}/nl/man5/deb*.5*
 %lang(nl) %{_mandir}/nl/man5/dpkg.cfg.5*
+%lang(nl) %{_mandir}/nl/man5/dsc.5*
+%lang(nl) %{_mandir}/nl/man7/deb-version.7*
+%lang(nl) %{_mandir}/nl/man8/dpkg-fsys-usrunmess.8.*
 %lang(pl) %{_mandir}/pl/man1/dpkg*.1*
 %lang(pl) %{_mandir}/pl/man5/deb*.5*
 %lang(pl) %{_mandir}/pl/man5/dpkg.cfg.5*
+%lang(pt) %{_mandir}/pt/man1/dpkg*.1*
+%lang(pt) %{_mandir}/pt/man5/deb*.5*
+%lang(pt) %{_mandir}/pt/man5/dpkg.cfg.5*
+%lang(pt) %{_mandir}/pt/man5/dsc.5*
+%lang(pt) %{_mandir}/pt/man7/deb-version.7*
+%lang(pt) %{_mandir}/pt/man8/dpkg-fsys-usrunmess.8.*
 %lang(sv) %{_mandir}/sv/man1/dpkg*.1*
 %lang(sv) %{_mandir}/sv/man5/deb*.5*
 %lang(sv) %{_mandir}/sv/man5/dpkg.cfg.5*
+%lang(sv) %{_mandir}/sv/man5/dsc.5*
+%lang(sv) %{_mandir}/sv/man7/deb-version.7*
+%lang(sv) %{_mandir}/sv/man8/dpkg-fsys-usrunmess.8.*
 
 %files -n libdpkg-devel
 %defattr(644,root,root,755)
+%doc doc/README.* doc/*.txt
 %{_libdir}/libdpkg.a
 %{_includedir}/dpkg
+%{_aclocaldir}/dpkg*.m4
 %{_pkgconfigdir}/libdpkg.pc
 
 %if %{with alternatives}
@@ -184,3 +231,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(sv) %{_mandir}/sv/man1/update-alternatives.1*
 %dir /var/lib/dpkg/alternatives
 %endif
+
+%files -n zsh-completion-dpkg
+%defattr(644,root,root,755)
+%{_datadir}/zsh/vendor-completions/_dpkg-parsechangelog
