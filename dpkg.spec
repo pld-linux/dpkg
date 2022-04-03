@@ -19,7 +19,7 @@ BuildRequires:	libselinux-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov
-BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	rpmbuild(macros) >= 1.754
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	xz-devel
