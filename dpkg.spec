@@ -97,6 +97,7 @@ Dopełnianianie parametrów w ZSH dla polecenia dpkg.
 	--disable-devel-docs \
 	--disable-dselect \
 	%{!?with_alternatives:--disable-update-alternatives} \
+	--with-zshcompletionsdir=%{zsh_compdir} \
 	--disable-silent-rules \
 	--disable-start-stop-daemon \
 	--with-admindir=/var/lib/%{name}
@@ -234,4 +235,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n zsh-completion-dpkg
 %defattr(644,root,root,755)
-%{_datadir}/zsh/vendor-completions/_dpkg-parsechangelog
+%{zsh_compdir}/_dpkg-parsechangelog
