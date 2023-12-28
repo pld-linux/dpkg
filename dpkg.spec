@@ -12,6 +12,7 @@ Group:		Applications/File
 Source0:	http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
 # Source0-md5:	591fe669ae36c1c93a8658bd650e38a6
 URL:		https://packages.debian.org/search?keywords=dpkg
+BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	gettext-tools >= 0.19.8
 BuildRequires:	libmd-devel
