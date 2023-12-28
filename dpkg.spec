@@ -5,25 +5,30 @@
 Summary:	Package maintenance system for Debian Linux
 Summary(pl.UTF-8):	Program do obsługi pakietów Debiana
 Name:		dpkg
-Version:	1.21.7
-Release:	2
+Version:	1.22.2
+Release:	1
 License:	GPL v2+
 Group:		Applications/File
 Source0:	http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%{version}.tar.xz
-# Source0-md5:	2c6686bd991810ce8a87469a7f20b415
-Patch0:		%{name}-md5.patch
-URL:		http://packages.debian.org/search?keywords=dpkg
+# Source0-md5:	591fe669ae36c1c93a8658bd650e38a6
+URL:		https://packages.debian.org/search?keywords=dpkg
 BuildRequires:	bzip2-devel
-BuildRequires:	gettext-tools >= 0.19
-BuildRequires:	libselinux-devel
-BuildRequires:	perl-tools-pod
+BuildRequires:	gettext-tools >= 0.19.8
+BuildRequires:	libmd-devel
+BuildRequires:	libselinux-devel >= 2.3
+BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	ncurses-devel >= 5
+BuildRequires:	perl-base >= 1:5.32.1
+BuildRequires:	perl-tools-pod >= 1:5.32.1
 BuildRequires:	pkgconfig
+BuildRequires:	po4a >= 0.59
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.754
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
+BuildRequires:	zstd-devel
 Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -86,21 +91,19 @@ Dopełnianianie parametrów w ZSH dla polecenia dpkg.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-# "ac_cv_header_md5_h=no" to disable error on md5.h from libmd5
-# (dpkg expects this header from FreeBSD-compatible libmd, having different API)
+# dpkg expects <md5.h> from FreeBSD-compatible libmd (not libmd5)
+CPPFLAGS="%{rpmcppflags} -I/usr/include/libmd"
 %configure \
-	ac_cv_header_md5_h=no \
 	PO4A="true" \
 	--disable-devel-docs \
 	--disable-dselect \
-	%{!?with_alternatives:--disable-update-alternatives} \
-	--with-zshcompletionsdir=%{zsh_compdir} \
 	--disable-silent-rules \
 	--disable-start-stop-daemon \
-	--with-admindir=/var/lib/%{name}
+	%{!?with_alternatives:--disable-update-alternatives} \
+	--with-admindir=/var/lib/%{name} \
+	--with-zshcompletionsdir=%{zsh_compdir}
 
 %{__make}
 
@@ -149,6 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libexecdir}/dpkg
 %attr(755,root,root) %{_libexecdir}/dpkg/dpkg-db-backup
+%attr(755,root,root) %{_libexecdir}/dpkg/dpkg-db-keeper
 
 %{perl_vendorlib}/Dpkg.pm
 %{perl_vendorlib}/Dpkg
@@ -165,12 +169,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/dpkg.cfg.5*
 %{_mandir}/man5/dsc.5*
 %{_mandir}/man7/deb-version.7*
+%{_mandir}/man7/dpkg-build-api.7*
 %{_mandir}/man8/dpkg-fsys-usrunmess.8.*
 %lang(de) %{_mandir}/de/man1/dpkg*.1*
 %lang(de) %{_mandir}/de/man5/deb*.5*
 %lang(de) %{_mandir}/de/man5/dpkg.cfg.5*
 %lang(de) %{_mandir}/de/man5/dsc.5*
 %lang(de) %{_mandir}/de/man7/deb-version.7*
+%lang(de) %{_mandir}/de/man7/dpkg-build-api.7*
 %lang(de) %{_mandir}/de/man8/dpkg-fsys-usrunmess.8.*
 %lang(es) %{_mandir}/es/man1/dpkg*.1*
 %lang(es) %{_mandir}/es/man5/deb*.5*
@@ -180,7 +186,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fr) %{_mandir}/fr/man5/dpkg.cfg.5*
 %lang(fr) %{_mandir}/fr/man5/dsc.5*
 %lang(fr) %{_mandir}/fr/man7/deb-version.7*
-%lang(hu) %{_mandir}/hu/man5/dpkg.cfg.5*
+%lang(fr) %{_mandir}/fr/man8/dpkg-fsys-usrunmess.8.*
 %lang(it) %{_mandir}/it/man1/dpkg*.1*
 %lang(it) %{_mandir}/it/man5/deb*.5*
 %lang(it) %{_mandir}/it/man5/dpkg.cfg.5*
@@ -192,6 +198,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(nl) %{_mandir}/nl/man5/dpkg.cfg.5*
 %lang(nl) %{_mandir}/nl/man5/dsc.5*
 %lang(nl) %{_mandir}/nl/man7/deb-version.7*
+%lang(nl) %{_mandir}/nl/man7/dpkg-build-api.7*
 %lang(nl) %{_mandir}/nl/man8/dpkg-fsys-usrunmess.8.*
 %lang(pl) %{_mandir}/pl/man1/dpkg*.1*
 %lang(pl) %{_mandir}/pl/man5/deb*.5*
@@ -201,12 +208,14 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pt) %{_mandir}/pt/man5/dpkg.cfg.5*
 %lang(pt) %{_mandir}/pt/man5/dsc.5*
 %lang(pt) %{_mandir}/pt/man7/deb-version.7*
+%lang(pt) %{_mandir}/pt/man7/dpkg-build-api.7*
 %lang(pt) %{_mandir}/pt/man8/dpkg-fsys-usrunmess.8.*
 %lang(sv) %{_mandir}/sv/man1/dpkg*.1*
 %lang(sv) %{_mandir}/sv/man5/deb*.5*
 %lang(sv) %{_mandir}/sv/man5/dpkg.cfg.5*
 %lang(sv) %{_mandir}/sv/man5/dsc.5*
 %lang(sv) %{_mandir}/sv/man7/deb-version.7*
+%lang(sv) %{_mandir}/sv/man7/dpkg-build-api.7*
 %lang(sv) %{_mandir}/sv/man8/dpkg-fsys-usrunmess.8.*
 
 %files -n libdpkg-devel
