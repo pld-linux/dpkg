@@ -23,6 +23,7 @@ BuildRequires:	perl-base >= 1:5.32.1
 BuildRequires:	perl-tools-pod >= 1:5.32.1
 BuildRequires:	pkgconfig
 BuildRequires:	po4a >= 0.59
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.754
 BuildRequires:	tar >= 1:1.22
